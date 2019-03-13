@@ -89,10 +89,6 @@ function Node(value, tree)
                           var store = [];
                           var nodes = this.getAncestors();
                           nodes = [nodes[nodes.length - 1]].concat(nodes[nodes.length - 1].getDescendants());
-                          //nodes = nodes.concat(nodes[nodes.length - 1].getDescendants();
-                          // if (nodes[0].parentId != 0) {
-                          //   nodes.unshift(nodes[0].getParent());
-                          // }
                           for (var i = 0; i < nodes.length; i++) {
                             store.push(nodes[i].value);
                           }
