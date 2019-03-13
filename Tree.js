@@ -60,12 +60,14 @@ function Node(value, tree)
 
   this.getAncestors   = function()
                         {
+                          var parentNode;
                           var results = [];
-                          if (this.nodeId == 0) {
+                          if (this.parentId == 0) {
                             return results;
                           }
-                          results.push(this);
-                          results = results.concat(this.getParent().getAncestors());
+                          parentNode = this.getParent();
+                          results.push(parentNode);
+                          results = results.concat(parentNode.getAncestors());
                           return results;
                         }; // getAncestors
 
@@ -86,10 +88,11 @@ function Node(value, tree)
                         {
                           var store = [];
                           var nodes = this.getAncestors();
-                          nodes = nodes[nodes.length - 1].getDescendants();
-                          if (nodes[0].parentId != 0) {
-                            nodes.unshift(nodes[0].getParent());
-                          }
+                          nodes = [nodes[nodes.length - 1]].concat(nodes[nodes.length - 1].getDescendants());
+                          //nodes = nodes.concat(nodes[nodes.length - 1].getDescendants();
+                          // if (nodes[0].parentId != 0) {
+                          //   nodes.unshift(nodes[0].getParent());
+                          // }
                           for (var i = 0; i < nodes.length; i++) {
                             store.push(nodes[i].value);
                           }
@@ -103,6 +106,7 @@ function Node(value, tree)
                           for (var i = 0; i < nodes.length; i++) {
                             store.push(nodes[i].value);
                           }
+                          store.push(this.value);
                           return new Tree(store);
                         }; // getLimb
 
@@ -169,6 +173,8 @@ function Tree(store)
                           var store   = [];
                           var nodeIds = [];
                           for (var i = 0; i < results.length; i++) {
+                            nodeIds.push(results[i].nodeId);
+                            store.push(results[i].value);
                             ancestors = results[i].getAncestors();
                             for (j = 0; j < ancestors.length; j++) {
                               if (!nodeIds.includes(ancestors[j].nodeId)) {
@@ -295,7 +301,7 @@ function Tree(store)
                               }
                               break;
                             default:
-                              throw "Unsupported search operator";
+                              throw "Unsupported search operator.";
                           }
                           return results;
                         }; // find
