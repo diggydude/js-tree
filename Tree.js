@@ -23,7 +23,7 @@ function Node(value, tree)
     this.parentId = value.parentId;
   }
   if (this.nodeId == null) {
-    this.parentId = String.random(32);
+    this.nodeId = String.random(32);
   }
 
   this.setValue       = function(value)
