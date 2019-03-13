@@ -79,7 +79,7 @@ function Node(value, tree)
                           }
                           results = results.concat(this.childNodes);
                           for (var i = 0; i < this.childNodes.length; i++) {
-                            results.concat(this.childNodes[i].getDescendants());
+                            results = results.concat(this.childNodes[i].getDescendants());
                           }
                           return results;
                         }; // getDescendants
@@ -110,7 +110,8 @@ function Node(value, tree)
                         {
                           var data, stem;
                           var store = [];
-                          var nodes = this.getDescendants();for (var i = 0; i < nodes.length; i++) {
+                          var nodes = this.getDescendants();
+                          for (var i = 0; i < nodes.length; i++) {
                             store.push(nodes[i].value);
                           }
                           data = this.value;
