@@ -126,8 +126,28 @@ function Node(value, tree)
 
 } // Node
 
-function Tree(store)
+function Tree()
 {
+
+  this.importStore    = function(idField, parentIdField, store)
+                        {
+                          for (var i = 0; i < store.length; i++) {
+                            if (idField != "id") {
+                              store[i].id = store[i][idField];
+                            }
+                            if (parentIdField != "parentId") {
+                              store[i].parentId = store[i][parentIdField];
+                            }
+                          }
+                          store.sort(function(a, b) {return (a.id == b.id) ? 0 : ((a.id < b.id) ? -1 : 1);});
+                          for (var i = 0; i < store.length; i++) {
+                            if (!(store[i].id in this.nodes)) {
+                              node = this.createNode(store[i], this);
+                              this.nodes[store[i].id] = node;
+                              this.nodes[node.parentId].appendChild(node);
+                            }
+                          }
+                        }; // importStore
 
   this.createNode     = function(value)
                         {
@@ -331,9 +351,12 @@ function Tree(store)
                           return JSON.stringify(values);
                         }; // toString
 
-  var node;
+  var node, store;
+  if (arguments.length > 0) {
+    store = arguments[0];
+  }
   this.nodes = [];
-  this.root = this.createNode({"value" : null, "id" : 0, "parentId" : null}, this);
+  this.root = this.createNode({"value" : null, "id" : 0, "parentId" : null});
   this.nodes[0] = this.root;
   if (store instanceof String) {
     store = JSON.parse(store);
