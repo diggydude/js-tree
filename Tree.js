@@ -1,4 +1,4 @@
-String.prototype.random = function(length)
+String.random = function(length)
 {
   var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var str   = "";
