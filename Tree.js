@@ -352,7 +352,7 @@ function Tree()
                         }; // toString
 
   var node;
-  var store = (arguments.length > 0) ? arguments[0] : new Array();
+  var store = (arguments.length > 0) ? arguments[0] : [];
   this.nodes = [];
   this.root = this.createNode({"value" : null, "id" : 0, "parentId" : null});
   this.nodes[0] = this.root;
