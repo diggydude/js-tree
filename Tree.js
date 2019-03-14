@@ -351,10 +351,8 @@ function Tree()
                           return JSON.stringify(values);
                         }; // toString
 
-  var node, store;
-  if (arguments.length > 0) {
-    store = arguments[0];
-  }
+  var node;
+  var store = (arguments.length > 0) ? arguments[0] : new Array();
   this.nodes = [];
   this.root = this.createNode({"value" : null, "id" : 0, "parentId" : null});
   this.nodes[0] = this.root;
