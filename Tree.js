@@ -149,6 +149,13 @@ function Tree()
                           }
                         }; // importStore
 
+  this.clear          = function()
+                        {
+                          this.nodes = [];
+                          this.root = this.createNode({"value" : null, "id" : 0, "parentId" : null});
+                          this.nodes[0] = this.root;
+                        }; // clear
+
   this.createNode     = function(value)
                         {
                           var node = new Node(value, this);
@@ -353,9 +360,7 @@ function Tree()
 
   var node;
   var store = (arguments.length > 0) ? arguments[0] : [];
-  this.nodes = [];
-  this.root = this.createNode({"value" : null, "id" : 0, "parentId" : null});
-  this.nodes[0] = this.root;
+  this.clear();
   if (store instanceof String) {
     store = JSON.parse(store);
   }
