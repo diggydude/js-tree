@@ -9,7 +9,7 @@ This is not a BTree or B+ Tree or any other kind of high-performance n-ary tree.
 
 There are no iterators. Instead, the Tree and Node classes have methods useful for graphing search results and various types of subtrees.
 
-The tree data can be loaded from and saved to localStorage or sessionStorage using the "local://" and "session://" psuedo-protocols. It may also be saved to a file on the server using the "tree-store" POST field and the provided PHP script. Note that the JavaScript version stores data as JSON, while the PHP version uses PHP's proprietary serialization format, so the data won't be compatible between the two versions. Conversion functions are provided in the PHP script.
+The tree data can be loaded from and saved to localStorage or sessionStorage using the "local://" and "session://" psuedo-protocols. It may also be saved to a file on the server using the provided PHP script. Note that the JavaScript version stores data as JSON, while the PHP version uses PHP's proprietary serialization format, so the data won't be compatible between the two versions. Conversion functions are provided in the PHP script.
 
 While this isn't a "TreeView" script per se, you can style the HTML output to work with some TreeView scripts.
 
