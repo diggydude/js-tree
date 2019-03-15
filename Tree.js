@@ -129,6 +129,40 @@ function Node(value, tree)
 function Tree()
 {
 
+  this.saveAs         = function(uri)
+                        {
+                          var request, formData;
+                          if (uri.indexOf('local://') == 0) {
+                            if (typeof(Storage) == "undefined") {
+                              console.log('localStorage not supported.');
+                              return;
+                            }
+                            localStorage.setItem(uri.substring(8), this.toArray());
+                            return;
+                          }
+                          else if (uri.indexOf('session://') == 0) {
+                            if (typeof(Storage) == "undefined") {
+                              console.log('sessionStorage not supported.');
+                              return;
+                            }
+                            sessionStorage.setItem(uri.substring(10), this.toArray());
+                            return;
+                          }
+                          formData = new FormData();
+                          formData.append('tree-store', this.toString());
+                          request = new XMLHttpRequest();
+                          with (request) {
+                            open('POST', uri, false);
+                            onload = function()
+                                     {
+                                       if (this.status != 200) {
+                                         throw "Error saving tree store: [" + this.status + "] " + this.statusText;
+                                       }
+                                     };
+                            send(formData);
+                          }
+                        }; // saveAs
+
   this.importStore    = function(idField, parentIdField, store)
                         {
                           for (var i = 0; i < store.length; i++) {
@@ -393,6 +427,34 @@ Tree.fromString          = function(json)
                              var store = JSON.parse(json);
                              return new Tree(store);
                            }; // Tree.fromString
+
+Tree.load                = function(uri)
+                           {
+                             var store, request;
+                             if (uri.indexOf('local://') == 0) {
+                               if (typeof(Storage) == "undefined") {
+                                 console.log('localStorage not supported.');
+                                 return;
+                               }
+                               store = localStorage.getItem(uri.substring(8));
+                             }
+                             else if (uri.indexOf('session://') == 0) {
+                               if (typeof(Storage) == "undefined") {
+                                 console.log('sessionStorage not supported.');
+                                 return;
+                               }
+                               store = sessionStorage.getItem(uri.substring(10));
+                             }
+                             else {
+                               request = new XMLHttpRequest();
+                               with (request) {
+                                 open('GET', uri, false);
+                                 onload = function() {store = JSON.parse(this.responseText);};
+                                 send();
+                               }
+                             }
+                             return new Tree(store);
+                           }; // Tree.load
 
 Tree._graphSubtree       = function(root, template)
                            {
