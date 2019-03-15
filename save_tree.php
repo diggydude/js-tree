@@ -11,4 +11,19 @@
   header('HTTP/1.1 500 Expected POST field "tree-store" is missing.');
   exit(1);
 
+  // Use these functions to covert the data between formats for
+  // use with either the PHP or JavaScript version.
+
+  function jsonToPhp($json)
+  {
+    $data = json_decode($json);
+    return serialize($data);
+  } // jsonToPhp
+
+  function phpToJson($serialized)
+  {
+    $data = unserialize($serialized);
+    return json_encode($data);
+  } // phpToJson
+
 ?>
