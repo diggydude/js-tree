@@ -23,7 +23,7 @@
   function phpToJson($serialized)
   {
     $data = unserialize($serialized);
-    return json_encode($data);
+    return json_encode(array_values($data));
   } // phpToJson
 
 ?>
