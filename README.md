@@ -1,5 +1,5 @@
 # js-tree
-A simple data tree structure with search and graphing functions.
+A simple data tree structure with search, graphing, and persistent storage functions.
 
 This is a JavaScript version of the PHP script found here:
 
